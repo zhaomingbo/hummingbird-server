@@ -9,7 +9,7 @@ RSpec.describe LibraryEntriesController, type: :controller do
     describe 'with filter[user_id]' do
       it 'should respond with a list of library entries' do
         3.times { create(:library_entry, user: user) }
-        get :index, filter: { user_id: user }
+        get :index, params: { filter: { user_id: user } }
         expect(response.body).to have_resources(LIBRARY_ENTRY, 'libraryEntries')
       end
     end
@@ -17,7 +17,9 @@ RSpec.describe LibraryEntriesController, type: :controller do
     describe 'with filter[media_type] + filter[media_id]' do
       it 'should respond with a list of library entries' do
         3.times { create(:library_entry, media: anime) }
-        get :index, filter: { media_id: anime.id, media_type: 'Anime' }
+        get :index, params: {
+          filter: { media_id: anime.id, media_type: 'Anime' }
+        }
         expect(response.body).to have_resources(LIBRARY_ENTRY, 'libraryEntries')
       end
     end
@@ -26,8 +28,9 @@ RSpec.describe LibraryEntriesController, type: :controller do
       it 'should respond with a single library entry as an array' do
         create(:library_entry, user: user, media: anime)
         3.times { create(:library_entry, user: build(:user), media: anime) }
-        get :index, filter: { media_id: anime.id, media_type: 'Anime',
-                              user_id: user }
+        get :index, params: {
+          filter: { media_id: anime.id, media_type: 'Anime', user_id: user }
+        }
         expect(response.body).to have_resources(LIBRARY_ENTRY, 'libraryEntries')
         expect(JSON.parse(response.body)['data'].count).to eq(1)
       end
