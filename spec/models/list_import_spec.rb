@@ -27,12 +27,14 @@ require 'rails_helper'
 RSpec.describe ListImport do
   class FakeImport < ListImport
     def each
-      media = FactoryGirl.create_list(:anime, 100)
-      100.times do |i|
+      media = FactoryGirl.create_list(:anime, count)
+      count.times do |i|
         yield media[i], status: :current, progress: 1
       end
     end
-    def count; 100; end
+    def count
+      @count ||= rand(0..20)
+    end
   end
 
   it { should define_enum_for(:status) }
@@ -73,7 +75,7 @@ RSpec.describe ListImport do
       it 'should yield repeatedly with the status' do
         expect { |b|
           subject.apply(&b)
-        }.to yield_successive_args(*Array.new(102, Hash))
+        }.to yield_successive_args(*Array.new(subject.count+2, Hash))
       end
     end
 
