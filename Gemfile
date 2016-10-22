@@ -2,8 +2,7 @@ source 'https://rubygems.org'
 ruby '2.3.1'
 
 # Core Stuff
-gem 'rails', '4.2.1'
-gem 'rails-api'
+gem 'rails', '>= 5.0.0', '< 5.1'
 gem 'puma'
 
 # Database Stuff
@@ -15,7 +14,7 @@ gem 'connection_pool' # Pool our Redises
 gem 'chewy' # ElasticSearch
 
 # Auth{entication,orization}
-gem 'devise', '~> 3.5'
+gem 'devise'
 gem 'devise-async'
 gem 'doorkeeper'
 gem 'pundit'
