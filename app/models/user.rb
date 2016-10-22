@@ -79,8 +79,7 @@
 class User < ApplicationRecord
   PAST_NAMES_LIMIT = 10
 
-  devise :database_authenticatable, :registerable, :recoverable,
-    :validatable, :confirmable, :async
+  devise :database_authenticatable
   rolify
 
   belongs_to :pro_membership_plan, required: false

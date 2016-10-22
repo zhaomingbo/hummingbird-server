@@ -15,7 +15,6 @@ gem 'chewy' # ElasticSearch
 
 # Auth{entication,orization}
 gem 'devise'
-gem 'devise-async'
 gem 'doorkeeper'
 gem 'pundit'
 gem 'jsonapi-authorization', '~> 0.8.0'
