@@ -194,6 +194,10 @@ class User < ApplicationRecord
     @notifications ||= Feed.notifications(id)
   end
 
+  def finished?
+    email.present? && bio.present?
+  end
+
   after_create do
     UserMailer.confirmation(self).deliver_now
     aggregated_feed.follow(feed)
