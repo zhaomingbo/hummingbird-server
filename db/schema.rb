@@ -69,6 +69,18 @@ ActiveRecord::Schema.define(version: 20161207194453) do
   add_index "anime_producers", ["anime_id"], name: "index_anime_producers_on_anime_id", using: :btree
   add_index "anime_producers", ["producer_id"], name: "index_anime_producers_on_producer_id", using: :btree
 
+  create_table "bestowments", force: :cascade do |t|
+    t.string   "badge_id",                null: false
+    t.integer  "user_id",                 null: false
+    t.integer  "progress",    default: 0, null: false
+    t.integer  "rank",        default: 0
+    t.datetime "bestowed_at"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "title"
+    t.text     "description"
+  end
+
   create_table "blocks", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "blocked_id", null: false
@@ -78,16 +90,6 @@ ActiveRecord::Schema.define(version: 20161207194453) do
 
   add_index "blocks", ["blocked_id"], name: "index_blocks_on_blocked_id", using: :btree
   add_index "blocks", ["user_id"], name: "index_blocks_on_user_id", using: :btree
-
-  create_table "bestowments", force: :cascade do |t|
-    t.string   "badge_id",                null: false
-    t.integer  "user_id",                 null: false
-    t.integer  "progress",    default: 0, null: false
-    t.integer  "rank",        default: 0
-    t.datetime "bestowed_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
 
   create_table "castings", force: :cascade do |t|
     t.integer  "media_id",                                 null: false
@@ -276,6 +278,16 @@ ActiveRecord::Schema.define(version: 20161207194453) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", unique: true, using: :btree
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "friendships", ["friend_id"], name: "index_friendships_on_friend_id", using: :btree
+  add_index "friendships", ["user_id"], name: "index_friendships_on_user_id", using: :btree
 
   create_table "gallery_images", force: :cascade do |t|
     t.integer  "anime_id"
@@ -906,6 +918,7 @@ ActiveRecord::Schema.define(version: 20161207194453) do
   add_index "votes", ["target_id", "target_type", "user_id"], name: "index_votes_on_target_id_and_target_type_and_user_id", unique: true, using: :btree
   add_index "votes", ["user_id", "target_type"], name: "index_votes_on_user_id_and_target_type", using: :btree
 
+  add_foreign_key "bestowments", "users"
   add_foreign_key "blocks", "users"
   add_foreign_key "blocks", "users", column: "blocked_id"
   add_foreign_key "comment_likes", "comments"
