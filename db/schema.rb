@@ -69,6 +69,14 @@ ActiveRecord::Schema.define(version: 20161207194453) do
   add_index "anime_producers", ["anime_id"], name: "index_anime_producers_on_anime_id", using: :btree
   add_index "anime_producers", ["producer_id"], name: "index_anime_producers_on_producer_id", using: :btree
 
+  create_table "bestowment_cashes", force: :cascade do |t|
+    t.string   "badge_id"
+    t.integer  "rank"
+    t.integer  "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "bestowments", force: :cascade do |t|
     t.string   "badge_id",                null: false
     t.integer  "user_id",                 null: false
