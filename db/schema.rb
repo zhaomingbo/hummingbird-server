@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20161207194453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "pg_trgm"
 
   create_table "anime", force: :cascade do |t|
     t.string   "slug",                      limit: 255
@@ -861,6 +862,8 @@ ActiveRecord::Schema.define(version: 20161207194453) do
     t.inet     "ip_addresses",                            default: [],                       array: true
     t.string   "previous_email"
     t.integer  "pinned_post_id"
+    t.integer  "consecutive_days",                        default: 0,           null: false
+    t.datetime "last_login"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -927,6 +930,8 @@ ActiveRecord::Schema.define(version: 20161207194453) do
   add_foreign_key "marathon_events", "marathons"
   add_foreign_key "marathons", "library_entries"
   add_foreign_key "media_follows", "users"
+  add_foreign_key "post_likes", "posts"
+  add_foreign_key "post_likes", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "posts", "users", column: "target_user_id"
   add_foreign_key "reports", "users"
