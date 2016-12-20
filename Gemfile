@@ -47,7 +47,7 @@ gem 'rinku'
 gem 'friendly_id' # slug-urls-are-cool
 gem 'nokogiri' # Parse MAL XML shit
 gem 'typhoeus' # Parallelize scraping tasks
-gem 'jsonapi-resources', github: 'cerebris/jsonapi-resources', branch: 'beta'
+gem 'jsonapi-resources', github: 'cerebris/jsonapi-resources', branch: 'fix_933'
 # JSON-API resources
 gem 'acts_as_list' # Sortables!
 gem 'paranoia', '~> 2.0' # Faux deletion
