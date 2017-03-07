@@ -884,6 +884,7 @@ Rails.application.routes.draw do
     jsonapi_resources :manga_characters
     jsonapi_resources :manga_staff
     jsonapi_resources :library_entry_logs
+    jsonapi_resources :reblogs
     resources :activities, only: %i[destroy]
     get '/feeds/:group/:id', to: 'feeds#show'
     post '/feeds/:group/:id/_read', to: 'feeds#mark_read'
