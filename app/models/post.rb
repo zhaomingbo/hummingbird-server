@@ -49,7 +49,6 @@ class Post < ApplicationRecord
   belongs_to :spoiled_unit, polymorphic: true
   has_many :post_likes, dependent: :destroy
   has_many :comments, dependent: :destroy
-  # TODO: what happens if the original is destroyed?
   has_many :reblogs, dependent: :destroy
 
   validates :content, :content_formatted, presence: true
