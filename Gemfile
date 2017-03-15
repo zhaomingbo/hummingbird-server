@@ -64,6 +64,7 @@ gem 'typhoeus' # Parallelize scraping tasks
 # Rack Middleware
 gem 'rack-attack'
 gem 'rack-cors'
+gem 'heroku-deflater', github: 'migl/heroku-deflater'
 
 # Optimizations
 gem 'fast_blank' # Faster String#blank?

@@ -10,6 +10,13 @@ GIT
       stream-ruby (~> 2.4)
 
 GIT
+  remote: git://github.com/migl/heroku-deflater.git
+  revision: 92f18b6cb20560e9e4e2d44030d7a12a0809af24
+  specs:
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
+
+GIT
   remote: git://github.com/vevix/twemoji.git
   revision: 00b98685e46faa92d7d0109293ca8092e34735c5
   specs:
@@ -487,6 +494,7 @@ DEPENDENCIES
   guard
   guard-rspec
   hashie
+  heroku-deflater!
   hiredis
   html-pipeline
   image_optim
