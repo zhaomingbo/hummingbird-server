@@ -105,4 +105,5 @@ end
 
 group :production, :staging do
   gem 'rails_12factor' # Log to stdout, serve assets
+  gem 'tunemygc' # Tune the GC
 end
