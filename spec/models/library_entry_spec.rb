@@ -75,6 +75,11 @@ RSpec.describe LibraryEntry, type: :model do
       .is_less_than_or_equal_to(5)
       .is_greater_than(0)
   end
+  it do
+    expect(subject).to validate_numericality_of(:new_rating)
+      .is_less_than_or_equal_to(19)
+      .is_greater_than_or_equal_to(1)
+  end
 
   describe 'media_present validation' do
     let(:anime) { build(:anime) }
