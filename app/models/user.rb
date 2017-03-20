@@ -104,7 +104,8 @@ class User < ApplicationRecord
   ].freeze
 
   rolify after_add: :update_title, after_remove: :update_title
-  has_secure_password
+  has_secure_password validations: false
+  enum status: %i[unregistered registered]
   update_index('users#user') { self }
 
   belongs_to :pro_membership_plan, required: false
@@ -132,8 +133,10 @@ class User < ApplicationRecord
   has_many :list_imports, dependent: :destroy
   has_many :group_members, dependent: :destroy
 
+  validates :email, :name, :password, absence: true, if: :unregistered?
   validates :email, presence: true,
-                    uniqueness: { case_sensitive: false }
+                    uniqueness: { case_sensitive: false },
+                    if: :registered?
   validates :name, presence: true,
                    uniqueness: { case_sensitive: false },
                    length: { minimum: 3, maximum: 20 },
@@ -142,19 +145,21 @@ class User < ApplicationRecord
                      message: <<-EOF.squish
                        can only contain letters, numbers, and underscores.
                      EOF
-                   }
+                   },
+                   if: :registered?
   validates :name, format: {
     with: /\A[A-Za-z0-9]/,
     message: 'must begin with a letter or number'
-  }
+  }, if: :registered?
   validates :name, format: {
     without: /\A[0-9]*\z/,
     message: 'cannot be entirely numbers'
-  }
-  validate :not_reserved_username
+  }, if: :registered?
+  validate :not_reserved_username, if: :registered?
   validates :about, length: { maximum: 500 }
   validates :gender, length: { maximum: 20 }
-  validates :password_digest, presence: true
+  validates :password, length: { maximum: 72 }, presence: true, if: :registered?
+  validates :password_digest, presence: true, if: :registered?
   validates :facebook_id, uniqueness: true, allow_nil: true
 
   scope :by_name, ->(*names) {
@@ -180,7 +185,7 @@ class User < ApplicationRecord
   end
 
   def not_reserved_username
-    errors.add(:name, 'is reserved') if RESERVED_NAMES.include?(name.downcase)
+    errors.add(:name, 'is reserved') if RESERVED_NAMES.include?(name&.downcase)
   end
 
   def pro?
@@ -226,7 +231,7 @@ class User < ApplicationRecord
   end
 
   def admin?
-    self.title == 'Staff' || self.title == 'Mod'
+    title == 'Staff' || title == 'Mod'
   end
 
   def feed
