@@ -9,8 +9,10 @@ class PostPolicy < ApplicationPolicy
   end
 
   def create?
-    return false if user&.blocked?(record.target_user)
-    return false if user&.has_role?(:banned)
+    return false unless user
+    return false if user.unregistered?
+    return false if user.blocked?(record.target_user)
+    return false if user.has_role?(:banned)
     if group
       return false unless member?
       return false if group.restricted? && !has_group_permission?(:content)

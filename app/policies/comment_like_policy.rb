@@ -6,8 +6,10 @@ class CommentLikePolicy < ApplicationPolicy
   end
 
   def create?
-    return false if user&.blocked?(record.comment.user)
-    return false if user&.blocked?(record.comment.post.user)
+    return false unless user
+    return false if user.unregistered?
+    return false if user.blocked?(record.comment.user)
+    return false if user.blocked?(record.comment.post.user)
     return false if group && !member?
     record.user == user
   end
