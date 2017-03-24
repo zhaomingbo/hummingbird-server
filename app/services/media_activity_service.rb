@@ -8,7 +8,7 @@ class MediaActivityService
   end
 
   def status(status)
-    fill_defaults user.feed.activities.new(
+    fill_defaults user.media_feed.activities.new(
       foreign_id: "LibraryEntry:#{library_entry.id}:updated-#{status}",
       verb: 'updated',
       status: status
@@ -16,7 +16,7 @@ class MediaActivityService
   end
 
   def rating(rating)
-    fill_defaults user.feed.activities.new(
+    fill_defaults user.media_feed.activities.new(
       foreign_id: "LibraryEntry:#{library_entry.id}:rated",
       verb: 'rated',
       rating: rating,
@@ -26,7 +26,7 @@ class MediaActivityService
 
   def progress(progress, unit = nil)
     return if progress == 0
-    fill_defaults user.feed.activities.new(
+    fill_defaults user.media_feed.activities.new(
       verb: 'progressed',
       foreign_id: "LibraryEntry:#{library_entry.id}:progressed-#{progress}",
       progress: progress,
@@ -35,7 +35,7 @@ class MediaActivityService
   end
 
   def reviewed(review)
-    fill_defaults user.feed.activities.new(
+    fill_defaults user.media_feed.activities.new(
       foreign_id: review,
       verb: 'reviewed',
       review: review
@@ -47,7 +47,7 @@ class MediaActivityService
       activity.actor ||= user
       activity.object ||= library_entry
       activity.to ||= []
-      activity.to << media&.feed
+      activity.to << media&.media_feed
       activity.media ||= media
       activity.nsfw ||= media.try(:nsfw?)
       activity.foreign_id ||= library_entry
