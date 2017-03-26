@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170318210412) do
+ActiveRecord::Schema.define(version: 20170326222205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -579,6 +579,7 @@ ActiveRecord::Schema.define(version: 20170318210412) do
     t.integer  "anime_id"
     t.integer  "manga_id"
     t.integer  "drama_id"
+    t.integer  "time_spent",                              default: 0,     null: false
   end
 
   add_index "library_entries", ["anime_id"], name: "index_library_entries_on_anime_id", using: :btree
