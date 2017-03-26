@@ -48,7 +48,7 @@ gem 'twemoji', github: 'vevix/twemoji'
 
 # Miscellaneous Utilities
 gem 'acts_as_list' # Sortables!
-# JSON-API resources
+gem 'addressable' # Fancy address logic
 gem 'counter_culture' # Fancier counter caches
 gem 'friendly_id' # slug-urls-are-cool
 gem 'hashie' # Souped-up Hashes
