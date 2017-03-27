@@ -114,8 +114,8 @@ class User < ApplicationRecord
                        dependent: :destroy
   has_many :following, class_name: 'Follow', foreign_key: 'follower_id',
                        dependent: :destroy
-  has_many :comments, dependent: :destroy
-  has_many :posts, dependent: :destroy
+  has_many :comments
+  has_many :posts
   has_many :media_follows, dependent: :destroy
   has_many :blocks, dependent: :destroy
   has_many :blocked, class_name: 'Block', foreign_key: 'blocked_id',
@@ -226,7 +226,7 @@ class User < ApplicationRecord
   end
 
   def admin?
-    self.title == 'Staff' || self.title == 'Mod'
+    title == 'Staff' || title == 'Mod'
   end
 
   def feed
@@ -269,6 +269,14 @@ class User < ApplicationRecord
 
   def update_profile_completed!
     update_profile_completed.save!
+  end
+
+  before_destroy do
+    # Destroy personal posts
+    posts.where(target_group: nil, target_user: nil, media: nil).destroy_all
+    # Reparent other posts to the "Deleted" user
+    posts.update_all(user_id: -10)
+    comments.update_all(user_id: -10)
   end
 
   after_commit on: :create do
