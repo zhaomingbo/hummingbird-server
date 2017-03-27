@@ -30,6 +30,10 @@ class UserResource < BaseResource
     context[:current_user]&.resource_owner
   end
 
+  def _remove
+    @model.destroy_later
+  end
+
   filter :name, apply: -> (records, value, _o) { records.by_name(value.first) }
   filter :self, apply: -> (records, _v, options) {
     current_user = options[:context][:current_user]&.resource_owner
