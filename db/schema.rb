@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170327054025) do
+=======
+ActiveRecord::Schema.define(version: 20170327033628) do
+>>>>>>> 4a9e610... Add deleted_at timestamp to User table
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1139,6 +1143,7 @@ ActiveRecord::Schema.define(version: 20170327054025) do
     t.boolean  "profile_completed",                       default: false,       null: false
     t.boolean  "feed_completed",                          default: false,       null: false
     t.boolean  "cover_image_processing"
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
